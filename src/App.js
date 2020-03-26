@@ -11,20 +11,16 @@ const Error = () => (
   </p>
 );
 
-class App extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      activeId: "home"
-    };
-  }
-  handleChangeTab = event => {
+function App() {
+  const [activeId, setActiveId] = React.useState("home");
+
+  const handleChangeTab = event => {
     const buttonId = event.target.id;
-    this.setState({ activeId: buttonId });
+    setActiveId(buttonId);
   };
 
-  getTabContent() {
-    switch (this.state.activeId) {
+  const getTabContent = () => {
+    switch (activeId) {
       case "home":
         return <Home />;
       case "about":
@@ -34,19 +30,14 @@ class App extends Component {
       default:
         return <Error />;
     }
-  }
+  };
 
-  render() {
-    return (
-      <div className="App">
-        <TabSelector
-          onTabChange={this.handleChangeTab}
-          activeId={this.state.activeId}
-        />
-        <div className="App-content">{this.getTabContent()}</div>
-      </div>
-    );
-  }
+  return (
+    <div className="App">
+      <TabSelector onTabChange={handleChangeTab} activeId={activeId} />
+      <div className="App-content">{getTabContent()}</div>
+    </div>
+  );
 }
 
 export default App;
